@@ -9,8 +9,14 @@ y una verificacion del cheking
 
 
 posibles actualizaciones
+
+
 -apartado de administrador
+
   *agregar usuarios y manejo de roles
+  
   *implementar los mismo que el supervisor
+  
 -apartado de supervisor
+
   *apartado para verificar las asistencias generales separado por meses de los empleados
