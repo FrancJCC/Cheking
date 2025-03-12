@@ -6,3 +6,11 @@ Cuenta con un apartado muy muy sencillo para contar con asistencia
 
 ![imagen](https://github.com/user-attachments/assets/ad456856-f1e3-48e0-98d2-a5fbffdbd035)
 y una verificacion del cheking
+
+
+posibles actualizaciones
+-apartado de administrador
+  *agregar usuarios y manejo de roles
+  *implementar los mismo que el supervisor
+-apartado de supervisor
+  *apartado para verificar las asistencias generales separado por meses de los empleados
