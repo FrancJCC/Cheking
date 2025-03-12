@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   
-  private apiUrl = 'http://localhost/Backend(Cheking)/api/';
+  private apiUrl = 'http://apicheking.atwebpages.com/api/';
 
   constructor(
     private http: HttpClient,
@@ -38,7 +38,7 @@ export class AuthService {
   providedIn: 'root'
 })
 export class AttendanceService {
-  private apiUrl = 'http://localhost/Backend(Cheking)/api/';
+  private apiUrl = 'http://apicheking.atwebpages.com/api/';
 
   constructor(private http: HttpClient) {}
 
