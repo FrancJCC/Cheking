@@ -1,0 +1,230 @@
+/* Add application styles & imports to this file! */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500&display=swap');
+
+:root {
+  --primary-color: #E8A1B3;
+  --secondary-color: #F7CAD5;
+  --accent-color: #90D7FF;
+  --background-color: #FFF5F7;
+  --text-color: #4A4A4A;
+  --gold: #D4AF37;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(232, 161, 179, 0.15);
+  margin-bottom: 30px;
+  border: 1px solid rgba(232, 161, 179, 0.2);
+  position: relative;
+  overflow: hidden;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+
+.form-group {
+  margin-bottom: 30px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid var(--secondary-color);
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: #FFF9FB;
+  font-family: 'Poppins', sans-serif;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(232, 161, 179, 0.2);
+  background-color: white;
+}
+
+.btn {
+  padding: 16px 32px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.5px;
+  display: block;
+  margin: 0 auto;
+  min-width: 200px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color), #FF9EB5);
+  color: white;
+  box-shadow: 0 4px 15px rgba(232, 161, 179, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(232, 161, 179, 0.4);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 30px 0;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+th, td {
+  padding: 20px 25px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+}
+
+th {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover {
+  background-color: #FFF9FB;
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--text-color);
+  text-align: center;
+  margin: 0 0 30px;
+  font-size: 3em;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.page-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+
+.attendance-date {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8em;
+  color: var(--text-color);
+  margin: 40px 0 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--secondary-color);
+  text-align: center;
+}
+
+.last-registration {
+  background: #FFF9FB;
+  padding: 25px 30px;
+  border-radius: 12px;
+  margin-top: 35px;
+  border: 1px solid var(--secondary-color);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.last-registration h3 {
+  color: var(--primary-color);
+  margin: 0 0 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6em;
+  text-align: center;
+}
+
+.last-registration p {
+  margin: 12px 0;
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.welcome-message {
+  text-align: center;
+  font-size: 1.2em;
+  color: var(--text-color);
+  margin: 0 auto 40px;
+  font-weight: 300;
+  line-height: 1.8;
+  max-width: 600px;
+}
+
+.login-card {
+  max-width: 450px !important;
+  margin: 60px auto !important;
+  padding: 45px !important;
+}
+
+.admin-table-container {
+  margin-top: 40px;
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
