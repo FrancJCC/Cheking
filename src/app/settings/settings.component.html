@@ -1,0 +1,275 @@
+<!-- Título Principal -->
+<h1 class="page-title">Configuraciones</h1>
+
+<!-- 🏢 Panel de Configuración Principal -->
+<div class="settings-container">
+  <!-- 📝 Sección de Información Empresarial -->
+  <div class="shifts-section">
+    <h2>
+      <i class="fas fa-building"></i>
+      Configuración de la Empresa
+    </h2>
+
+
+    <!-- Mensaje de éxito -->
+    <div *ngIf="showSuccessMessage" class="success-message">
+      Información de la empresa actualizada correctamente
+    </div>
+
+    <!-- Sección de información empresarial -->
+    <div class="header" (click)="toggleCompanyInfo()">
+      <span>Información Empresarial</span>
+      <i class="fas" [class.fa-chevron-down]="!isCompanyInfoVisible" [class.fa-chevron-up]="isCompanyInfoVisible"></i>
+    </div>
+
+    <!-- Contenedor de información empresarial -->
+    <div *ngIf="isCompanyInfoVisible" class="shifts-container">
+      <!-- Información Básica -->
+      <div class="shift-card">
+        <h3>Información Básica</h3>
+        <div class="form-group">
+          <label>Nombre de la Empresa</label>
+          <input type="text" placeholder="Ej: Cheking Solutions" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>RFC</label>
+          <input type="text" placeholder="Ej: XAXX010101000" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Razón Social</label>
+          <input type="text" placeholder="Ej: Cheking Solutions S.A. de C.V." class="form-control">
+        </div>
+      </div>
+
+      <!-- Información de Contacto -->
+      <div class="shift-card">
+        <h3>Información de Contacto</h3>
+        <div class="form-group">
+          <label>Teléfono Principal</label>
+          <input type="tel" placeholder="Ej: (555) 123-4567" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Correo Electrónico</label>
+          <input type="email" placeholder="Ej: contacto@cheking.com" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Sitio Web</label>
+          <input type="url" placeholder="Ej: www.cheking.com" class="form-control">
+        </div>
+      </div>
+
+      <!-- Dirección -->
+      <div class="shift-card">
+        <h3>Dirección</h3>
+        <div class="form-group">
+          <label>Calle y Número</label>
+          <input type="text" placeholder="Ej: Av. Reforma 123" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Colonia</label>
+          <input type="text" placeholder="Ej: Centro" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Ciudad</label>
+          <input type="text" placeholder="Ej: Ciudad de México" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Código Postal</label>
+          <input type="text" placeholder="Ej: 06500" class="form-control">
+        </div>
+      </div>
+
+      <!-- Información Adicional -->
+      <div class="shift-card">
+        <h3>Información Adicional</h3>
+        <div class="form-group">
+          <label>Giro Empresarial</label>
+          <input type="text" placeholder="Ej: Tecnología y Software" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Número de Empleados</label>
+          <input type="number" placeholder="Ej: 50" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Horario de Atención</label>
+          <input type="text" placeholder="Ej: Lunes a Viernes 9:00 - 18:00" class="form-control">
+        </div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="shift-card action-card">
+        <button class="btn btn-primary" disabled>
+          <i class="fas fa-save"></i>
+          Guardar Todos los Cambios
+        </button>
+        <p></p>
+        <button class="btn btn-secondary" disabled>
+          <i class="fas fa-undo"></i>
+          Restaurar
+        </button>
+      </div>
+    </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <!-- Separador -->
+  <div class="section-divider"></div>
+
+  <!-- 🕒 Sección de Turnos -->
+  <div class="shifts-section">
+    <h2>
+      <i class="fas fa-clock"></i>
+      Configuración de Turnos
+    </h2>
+
+    <!-- Mensaje de éxito al actualizar un turno -->
+    <div *ngIf="showSuccessMessage" class="success-message">
+      Turno actualizado correctamente
+    </div>
+
+    <!-- Sección de gestión de horarios -->
+    <div class="header" (click)="toggleShifts()">
+      <span>Horarios</span>
+      <i class="fas" [class.fa-chevron-down]="!isShiftsVisible" [class.fa-chevron-up]="isShiftsVisible"></i>
+    </div>
+
+    <!-- Lista de turnos configurados -->
+    <div *ngIf="isShiftsVisible" class="shifts-container">
+      <!-- Tarjeta individual para cada turno -->
+      <div *ngFor="let shift of shifts" class="shift-card">
+        <!-- Nombre del turno -->
+        <h3>{{ shift.name }}</h3>
+
+        <!-- Campo para hora de entrada -->
+        <div class="form-group">
+          <label>Hora de entrada:</label>
+          <input type="time" [(ngModel)]="shift.start_time" (change)="validateTimes(shift)" />
+          <span class="time-display">{{
+            formatTimeToAMPM(shift.start_time)
+            }}</span>
+        </div>
+
+        <!-- Campo para hora de salida -->
+        <div class="form-group">
+          <label>Hora de salida:</label>
+          <input type="time" [(ngModel)]="shift.end_time" (change)="validateTimes(shift)" />
+          <span class="time-display">{{
+            formatTimeToAMPM(shift.end_time)
+            }}</span>
+        </div>
+
+        <!-- Botón para guardar cambios -->
+        <button class="btn btn-primary" (click)="updateShift(shift)" [disabled]="!isValidTimeRange(shift)">
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <!-- Separador -->
+  <div class="section-divider"></div>
+
+  <!-- 👥 Sección de Empleados -->
+  <div class="shifts-section">
+    <h2>
+      <i class="fas fa-users"></i>
+      Lista de Empleados
+      <button class="btn btn-add-user" (click)="toggleUsers()">
+        <i class="fas fa-user-plus"></i> Agregar Usuario
+      </button>
+    </h2>
+
+    <!-- Tabla de empleados con nuevo diseño -->
+    <div class="shifts-container">
+      <div class="employees-table">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Foto</th>
+              <th>Usuario</th>
+              <th>Rol</th>
+              <th>Horario</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center">
+                <img src="assets/default-user.png" alt="Foto empleado" class="employee-photo">
+              </td>
+              <td>juan.perez</td>
+              <td><span class="role-badge employee">Empleado</span></td>
+              <td>Matutino (8:00 AM - 4:00 PM)</td>
+              <td class="text-center">
+                <button class="btn-action edit" (click)="editEmployee()" title="Editar">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn-action delete" (click)="deleteEmployee()" title="Eliminar">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Modal/Drawer para agregar/editar usuario -->
+      <div *ngIf="isUsersVisible" class="user-form-container">
+        <div class="user-form-header">
+          <h3><i class="fas fa-user-plus"></i> Nuevo Usuario</h3>
+          <button class="btn-close" (click)="toggleUsers()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="form-group">
+          <label>Nombre de Usuario</label>
+          <input type="text" placeholder="Ej: juan.perez" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" placeholder="Ingrese contraseña" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Rol</label>
+          <select class="form-control">
+            <option value="2" selected>Empleado</option>
+            <option value="3">Supervisor</option>
+            <option value="1">Administrador</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Horario</label>
+          <select class="form-control">
+            <option value="" selected disabled>Seleccione un horario</option>
+            <option *ngFor="let shift of shifts" [value]="shift.id">
+              {{shift.name}} ({{formatTimeToAMPM(shift.start_time)}} - {{formatTimeToAMPM(shift.end_time)}})
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Foto del Empleado</label>
+          <input type="file" accept="image/*" class="form-control">
+        </div>
+
+        <!-- Botones de Acción -->
+        <button class="btn btn-primary" disabled>
+          <i class="fas fa-user-plus"></i>
+          Crear Usuario
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="settings-container">
+  <router-outlet></router-outlet>
+</div>

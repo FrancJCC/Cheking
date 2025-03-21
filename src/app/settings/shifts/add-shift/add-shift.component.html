@@ -1,0 +1,63 @@
+<div class="edit-shift-container">
+  <h2>Agregar Nuevo Turno</h2>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Nombre del Turno:</label>
+      <input
+        type="text"
+        id="name"
+        [(ngModel)]="shift.name"
+        name="name"
+        class="form-control"
+        placeholder="Ej: Turno Matutino"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="start_time">Hora de Entrada:</label>
+      <input
+        type="time"
+        id="start_time"
+        [(ngModel)]="shift.start_time"
+        name="start_time"
+        class="form-control"
+        (change)="validateTimes()"
+        required
+      />
+      <span class="time-display">{{ formatTimeToAMPM(shift.start_time) }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="end_time">Hora de Salida:</label>
+      <input
+        type="time"
+        id="end_time"
+        [(ngModel)]="shift.end_time"
+        name="end_time"
+        class="form-control"
+        (change)="validateTimes()"
+        required
+      />
+      <span class="time-display">{{ formatTimeToAMPM(shift.end_time) }}</span>
+    </div>
+
+    <div class="button-group">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!isValidTimeRange()"
+      >
+        <i class="fas fa-save"></i> Guardar
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        <i class="fas fa-times"></i> Cancelar
+      </button>
+    </div>
+  </form>
+</div>

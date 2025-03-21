@@ -1,0 +1,116 @@
+<!-- Título Principal -->
+<h1 class="page-title">Registros de Asistencia</h1>
+
+<!-- Panel Principal de Registros -->
+<div class="records-container">
+  <!-- Filtros y Controles -->
+  <div class="filters-section">
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" 
+             placeholder="Buscar empleado..." 
+             class="search-input"
+             [(ngModel)]="searchTerm"
+             (input)="searchEmployees(searchTerm)">
+    </div>
+    
+    <div class="date-filters">
+      <div class="month-selector">
+        <i class="fas fa-calendar"></i>
+        <select class="filter-select" 
+                [(ngModel)]="selectedMonth"
+                (change)="filterByMonth(selectedMonth)">
+          <option value="Enero 2024">Enero 2024</option>
+          <option value="Febrero 2024">Febrero 2024</option>
+          <option value="Marzo 2024">Marzo 2024</option>
+        </select>
+      </div>
+      
+      <div class="view-toggle">
+        <button class="toggle-btn" 
+                [class.active]="currentView === 'daily'"
+                (click)="toggleView('daily')">
+          <i class="fas fa-calendar-day"></i>
+          Diario
+        </button>
+        <button class="toggle-btn"
+                [class.active]="currentView === 'weekly'"
+                (click)="toggleView('weekly')">
+          <i class="fas fa-calendar-week"></i>
+          Semanal
+        </button>
+        <button class="toggle-btn"
+                [class.active]="currentView === 'monthly'"
+                (click)="toggleView('monthly')">
+          <i class="fas fa-calendar-alt"></i>
+          Mensual
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de Registros -->
+  <div class="records-table-container">
+    <table class="records-table">
+      <thead>
+        <tr>
+          <th>Empleado</th>
+          <th>Fecha</th>
+          <th>Hora de Registro</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of records">
+          <td class="employee-cell">
+            <img [src]="record.employee.avatar" [alt]="record.employee.name" class="employee-avatar">
+            <div class="employee-info">
+              <span class="employee-name">{{ record.employee.name }}</span>
+              <span class="employee-position">{{ record.employee.position }}</span>
+            </div>
+          </td>
+          <td>{{ record.date }}</td>
+          <td class="time-cell" [class]="record.entryStatus">{{ record.entryTime }}</td>
+          <td><span class="status-badge" [class]="record.status">{{ record.status === 'complete' ? 'Presente' : record.status === 'late' ? 'Retardo' : 'No Registrado' }}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paginación -->
+  <div class="pagination">
+    <button class="pagination-btn" 
+            [disabled]="currentPage === 1"
+            (click)="handlePagination(currentPage - 1)">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    
+    <ng-container *ngFor="let page of pageNumbers">
+      <span *ngIf="page <= 3 || page === totalPages || page === currentPage"
+            class="page-number"
+            [class.active]="page === currentPage"
+            (click)="handlePagination(page)">
+        {{ page }}
+      </span>
+      <span *ngIf="page === 4 && totalPages > 5" class="page-dots">...</span>
+    </ng-container>
+    
+    <button class="pagination-btn"
+            [disabled]="currentPage === totalPages"
+            (click)="handlePagination(currentPage + 1)">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>
+
+<!-- Comentarios de las funciones que se implementarán después -->
+<!--
+  TODO: Implementar funciones:
+  - searchEmployees(): Búsqueda de empleados
+  - filterByMonth(): Filtrado por mes
+  - toggleView(): Cambiar entre vista diaria/semanal/mensual
+  - sortTable(): Ordenar tabla por columnas
+  - handlePagination(): Gestionar paginación
+  - exportRecords(): Exportar registros
+  - viewDetails(): Ver detalles de registro
+--> 

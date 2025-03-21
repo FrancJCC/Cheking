@@ -1,0 +1,48 @@
+<div class="shifts-section">
+  <h2>
+    <i class="fas fa-building"></i>
+    Configuración de la Empresa
+  </h2>
+
+  <!-- Mensaje de éxito -->
+  <div *ngIf="showSuccessMessage" class="success-message">
+    Información de la empresa actualizada correctamente
+  </div>
+
+  <!-- Contenedor de información empresarial -->
+  <div class="shifts-container">
+    <!-- Información Básica -->
+    <div class="shift-card">
+      <h3>Información Básica</h3>
+      <!-- ... resto del código de información básica ... -->
+    </div>
+
+    <!-- Información de Contacto -->
+    <div class="shift-card">
+      <h3>Información de Contacto</h3>
+      <!-- ... resto del código de información de contacto ... -->
+    </div>
+
+    <!-- Dirección -->
+    <div class="shift-card">
+      <h3>Dirección</h3>
+      <!-- ... resto del código de dirección ... -->
+    </div>
+
+    <!-- Información Adicional -->
+    <div class="shift-card">
+      <h3>Información Adicional</h3>
+      <!-- ... resto del código de información adicional ... -->
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="shift-card action-card">
+      <!-- ... botones ... -->
+    </div>
+  </div>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+</div>

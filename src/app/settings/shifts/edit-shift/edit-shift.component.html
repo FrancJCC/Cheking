@@ -1,0 +1,80 @@
+<div class="modal-overlay">
+  <div class="edit-shift-container">
+    <button class="close-button" (click)="cancel()">
+      <i class="fas fa-times"></i>
+    </button>
+    
+    <h2>{{ isEditing ? 'Editar Turno' : 'Nuevo Turno' }}</h2>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Indicador de carga -->
+    <div *ngIf="loading" class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Cargando turno...</p>
+    </div>
+
+    <!-- Formulario para editar turno -->
+    <form *ngIf="!loading" (ngSubmit)="onSubmit()">
+      <!-- Campo para el nombre del turno -->
+      <div class="form-group">
+        <label for="name">Nombre del Turno:</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="shift.name"
+          name="name"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <!-- Campo para hora de entrada -->
+      <div class="form-group">
+        <label for="start_time">Hora de Entrada:</label>
+        <input
+          type="time"
+          id="start_time"
+          [(ngModel)]="shift.start_time"
+          name="start_time"
+          class="form-control"
+          (change)="validateTimes()"
+          required
+        />
+        <span class="time-display">{{ formatTimeToAMPM(shift.start_time) }}</span>
+      </div>
+
+      <!-- Campo para hora de salida -->
+      <div class="form-group">
+        <label for="end_time">Hora de Salida:</label>
+        <input
+          type="time"
+          id="end_time"
+          [(ngModel)]="shift.end_time"
+          name="end_time"
+          class="form-control"
+          (change)="validateTimes()"
+          required
+        />
+        <span class="time-display">{{ formatTimeToAMPM(shift.end_time) }}</span>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="button-group">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!isValidTimeRange()"
+        >
+          <i class="fas fa-save"></i> Guardar Cambios
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,54 +1,66 @@
-// auth.service.ts
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, BehaviorSubject, throwError } from "rxjs";
+import { tap, catchError } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { environment } from '../../environments/environment';
+import { AlertService } from './shared/alert.service';
+import { StorageService } from './shared/storage.service';
+import { User, LoginResponse } from '../interfaces/auth.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthService {
-  
-  private apiUrl = 'http://apicheking.atwebpages.com/api/';
+  private apiUrl = environment.apiUrl;
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
+  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(
-    private http: HttpClient,
-    private router: Router // Agregamos Router
+    private http: HttpClient, 
+    private router: Router,
+    private alertService: AlertService,
+    private storageService: StorageService
   ) {}
 
-  login(username: string, password: string): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(`${this.apiUrl}login.php`, { username, password }, { headers });
+  login(username: string, password: string): Observable<LoginResponse> {
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+    return this.http
+      .post<LoginResponse>(environment.endpoints.login, { username, password }, { headers })
+      .pipe(
+        tap((response) => {
+          if (response.success) {
+            this.storageService.setUser(response.user);
+            this.isAuthenticatedSubject.next(true);
+            this.router.navigate(["/attendance"]);
+          } else {
+            this.alertService.showError("Credenciales incorrectas");
+            throw new Error("Credenciales incorrectas");
+          }
+        }),
+        catchError((error) => {
+          console.error("Error during login:", error);
+          this.alertService.showError("Credenciales incorrectas o error del servidor");
+          return throwError(() => new Error("Credenciales incorrectas o error del servidor"));
+        })
+      );
   }
 
-  logout() {
-    localStorage.removeItem('user');
-    this.router.navigate(['/login']);
+  logout(): void {
+    this.storageService.removeUser();
+    this.isAuthenticatedSubject.next(false);
+    this.router.navigate(["/login"]);
   }
 
-  // Verificar si hay sesión activa
   isAuthenticated(): boolean {
-    const user = localStorage.getItem('user');
-    return !!user;
-  }
-  
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AttendanceService {
-  private apiUrl = 'http://apicheking.atwebpages.com/api/';
-
-  constructor(private http: HttpClient) {}
-
-  // Ahora recibe user_id en lugar de username
-  getEmployeeInfo(user_id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}employee.php?id=${user_id}`);
+    return this.storageService.hasUser();
   }
 
-  // Ahora envía user_id en lugar de username
-  registerAttendance(user_id: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}attendance.php`, { user_id });
+  getCurrentUser(): User | null {
+    return this.storageService.getUser();
+  }
+
+  getIsAuthenticated(): boolean {
+    return this.isAuthenticatedSubject.value;
   }
 }

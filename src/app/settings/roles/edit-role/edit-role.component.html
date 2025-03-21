@@ -1,0 +1,30 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Editar Rol</h2>
+      <button class="btn-icon" (click)="onCancel()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Nombre del Rol</label>
+        <input 
+          type="text" 
+          id="name" 
+          formControlName="name" 
+          placeholder="Ingrese el nombre del rol">
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="roleForm.invalid || isSubmitting">
+          {{ isSubmitting ? 'Guardando...' : 'Guardar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

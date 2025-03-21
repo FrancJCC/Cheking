@@ -1,5 +1,6 @@
 /* Add application styles & imports to this file! */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500&display=swap');
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 
 :root {
   --primary-color: #E8A1B3;
@@ -8,22 +9,30 @@
   --background-color: #FFF5F7;
   --text-color: #4A4A4A;
   --gold: #D4AF37;
+  --sidebar-width: 250px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
   background-color: var(--background-color);
   color: var(--text-color);
   background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
   min-height: 100vh;
+  position: relative;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 20px;
 }
 
 .card {
@@ -213,12 +222,6 @@ tr:hover {
   max-width: 600px;
 }
 
-.login-card {
-  max-width: 450px !important;
-  margin: 60px auto !important;
-  padding: 45px !important;
-}
-
 .admin-table-container {
   margin-top: 40px;
   background: white;
@@ -226,5 +229,38 @@ tr:hover {
   padding: 30px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.month-selector {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.month-btn {
+  padding: 10px 20px;
+  border: 2px solid var(--secondary-color);
+  border-radius: 10px;
+  background: white;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.month-btn.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.settings-section {
+  margin-bottom: 40px;
+}
+
+.settings-section h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  font-size: 1.8em;
+}

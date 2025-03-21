@@ -1,83 +1,105 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "../services/auth.service"; // Importa el servicio
-import { HttpClientModule } from "@angular/common/http";
-// Importa HttpClientModule
+import { FormBuilder,FormGroup,Validators,ReactiveFormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule], // Agrega HttpClientModule
+  styleUrls: ["./login.styles.css"], // Vincula el archivo CSS específico
+  imports: [CommonModule, ReactiveFormsModule], // Agrega HttpClientModule
   template: `
-    <div class="container">
-      <div class="card login-card">
-        <h1 class="page-title">Cafeteria LolaLatte</h1>
-        <p class="welcome-message">
-          Bienvenida al sistema de administración.<br />
-          Por favor, ingresa tus credenciales para continuar.
-        </p>
-        <form (ngSubmit)="onLogin()">
+    <div class="login-container">
+      <div class="login-card">
+        <h2 class="page-title">Iniciar sesión</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
           <div class="form-group">
             <label for="username">Usuario:</label>
             <input
               type="text"
               id="username"
-              [(ngModel)]="username"
-              name="username"
+              formControlName="username"
               placeholder="Ingresa tu usuario"
-              autocomplete="off"
-              required
             />
+            <div
+              *ngIf="
+                loginForm.get('username')?.invalid &&
+                loginForm.get('username')?.touched
+              "
+              class="error-message"
+            >
+              El usuario es obligatorio.
+            </div>
           </div>
           <div class="form-group">
             <label for="password">Contraseña:</label>
             <input
               type="password"
               id="password"
-              [(ngModel)]="password"
-              name="password"
+              formControlName="password"
               placeholder="Ingresa tu contraseña"
-              required
             />
+            <div
+              *ngIf="
+                loginForm.get('password')?.invalid &&
+                loginForm.get('password')?.touched
+              "
+              class="error-message"
+            >
+              La contraseña es obligatoria.
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary" [disabled]="isLoading">
-            {{ isLoading ? "Cargando..." : "Iniciar Sesión" }}
+          <button type="submit" [disabled]="isLoading" class="btn btn-primary">
+            {{ isLoading ? "Cargando..." : "Iniciar sesión" }}
           </button>
+          <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </div>
         </form>
-        <div *ngIf="errorMessage" class="alert alert-danger mt-3">
-          {{ errorMessage }}
-        </div>
       </div>
     </div>
   `,
 })
 export class LoginComponent {
-  username: string = "";
-  password: string = "";
-  isLoading: boolean = false;
+  loginForm: FormGroup;
   errorMessage: string = "";
+  isLoading: boolean = false;
 
   constructor(
-    private router: Router,
-    private authService: AuthService // Inyecta el servicio
-  ) {}
-
-  // login.component.ts
-  onLogin() {
-    this.authService.login(this.username, this.password).subscribe({
-      next: (response) => {
-        if (response.success) {
-          localStorage.setItem('user', JSON.stringify(response.user)); // Guarda el usuario
-          this.router.navigate(['/attendance']);
-        } else {
-          this.errorMessage = response.message;
-        }
-      },
-      error: (err) => {
-        console.error('Error:', err);
-      }
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      username: ["", Validators.required],
+      password: ["", Validators.required],
     });
+  }
+  // login.component.ts
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(["/attendance"]); // Redirige si ya está autenticado
+    }
+  }
+
+  onLogin() {
+    if (this.loginForm.valid) {
+      this.isLoading = true;
+      const { username, password } = this.loginForm.value;
+
+      this.authService.login(username, password).subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.router.navigate(["/attendance"]); // Redirige al dashboard después de iniciar sesión
+        },
+        error: (err) => {
+          this.errorMessage = err.message || "Ocurrió un error,el usuario o la contraseña estan mal";
+          this.isLoading = false;
+        },
+      });
+    } else {
+      this.errorMessage = "Por favor, completa todos los campos.";
+    }
   }
 }

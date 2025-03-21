@@ -1,0 +1,154 @@
+/* Sidebar Styles */
+:root {
+  --sidebar-width: 250px;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: white;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px 0;
+  z-index: 100; /* Menor que el z-index del login */
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 2px solid var(--secondary-color);
+  margin-bottom: 20px;
+}
+
+.sidebar-header h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--primary-color);
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-link {
+  display: flex; /* Alinea el ícono y el texto horizontalmente */
+  align-items: center; /* Centra verticalmente el ícono y el texto */
+  gap: 10px; /* Espacio entre el ícono y el texto */
+  padding: 15px 25px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.95em;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: var(--background-color);
+  color: var(--primary-color);
+  border-right: 4px solid var(--primary-color);
+}
+
+/* Estilo específico para el botón de cerrar sesión */
+.logout {
+  margin-top: auto; /* Empuja el botón hacia abajo */
+  border-top: 1px solid var(--secondary-color); /* Línea divisoria */
+  padding-top: 20px; /* Espacio arriba del botón */
+}
+
+.logout .nav-link {
+  display: flex; /* Alinea el ícono horizontalmente */
+  align-items: center; /* Centra verticalmente el ícono */
+  justify-content: flex-start; /* Alinea el ícono a la izquierda */
+  color: var(--primary-color); /* Cambia el color del ícono */
+  font-weight: 500; /* Hace el ícono más destacado */
+  padding-left: 25px; /* Alinea el contenido a la izquierda */
+  gap: 10px; /* Espacio entre el ícono y el texto (si lo hubiera) */
+}
+
+.logout .nav-link:hover {
+  background: var(--background-color);
+  color: var(--primary-color); /* Cambia el color al pasar el mouse */
+}
+
+/* Añade estos estilos al archivo existente */
+
+.has-submenu {
+  position: relative;
+}
+
+/* Estilos para el submenú */
+.has-submenu .submenu-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.submenu {
+  display: none;
+  padding-left: 20px;
+}
+
+.has-submenu.open > .submenu {
+  display: block;
+}
+
+.submenu .submenu {
+  padding-left: 15px;
+}
+
+.submenu .submenu.open {
+  display: block;
+}
+
+.nav-link.submenu-toggle {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submenu li a {
+  padding: 12px 15px 12px 45px;
+  font-size: 0.9em;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.submenu li a:hover {
+  opacity: 1;
+  background: rgba(232, 161, 179, 0.2);
+  padding-left: 50px;
+}
+
+.submenu li a i {
+  font-size: 0.9em;
+  width: 20px;
+  text-align: center;
+}
+
+/* Animación del icono */
+.submenu-toggle i.fas {
+  transition: transform 0.3s ease;
+}
+
+.has-submenu.open .submenu-toggle i.fas {
+  transform: rotate(180deg);
+}
+
+/* Mejoras generales de los íconos */
+.nav-link i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}

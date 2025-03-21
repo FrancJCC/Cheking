@@ -1,0 +1,48 @@
+<!-- Contenedor principal del formulario de eliminación -->
+<div class="delete-shift-container">
+  <h2>Eliminar Turno</h2>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Spinner de carga -->
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Cargando turno...</p>
+  </div>
+
+  <!-- Formulario de confirmación -->
+  <div *ngIf="!loading" class="confirmation-box">
+    <div class="warning-text">
+      <i class="fas fa-exclamation-triangle"></i>
+      <p>¿Estás seguro de que deseas eliminar este turno?</p>
+      <p>Esta acción no se puede deshacer.</p>
+    </div>
+
+    <div class="shift-details">
+      <div class="detail-group">
+        <label>Nombre del Turno:</label>
+        <span>{{ shift.name }}</span>
+      </div>
+      <div class="detail-group">
+        <label>Hora de Inicio:</label>
+        <span>{{ formatTimeToAMPM(shift.start_time) }}</span>
+      </div>
+      <div class="detail-group">
+        <label>Hora de Fin:</label>
+        <span>{{ formatTimeToAMPM(shift.end_time) }}</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button (click)="deleteShift()" class="btn btn-danger">
+        <i class="fas fa-trash"></i> Eliminar Turno
+      </button>
+      <button (click)="cancel()" class="btn btn-secondary">
+        <i class="fas fa-times"></i> Cancelar
+      </button>
+    </div>
+  </div>
+</div> 

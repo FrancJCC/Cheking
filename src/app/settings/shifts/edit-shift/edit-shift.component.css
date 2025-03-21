@@ -1,0 +1,199 @@
+/* Overlay para el fondo */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+/* Contenedor del modal */
+.edit-shift-container {
+  max-width: 600px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  position: relative;
+  animation: slideIn 0.3s ease-out;
+  border: 1px solid rgba(232, 161, 179, 0.2);
+}
+
+.edit-shift-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  border-radius: 20px 20px 0 0;
+}
+
+/* Botón de cerrar */
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background: var(--secondary-color);
+  transform: rotate(90deg);
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Estilos del título */
+h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--text-color);
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2em;
+}
+
+/* Estilos de los grupos de formulario */
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+/* Estilos de las etiquetas */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Estilos de los campos de control */
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--secondary-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #FFF9FB;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  padding-right: 100px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(232, 161, 179, 0.2);
+  background-color: white;
+}
+
+/* Estilos del display de tiempo */
+.time-display {
+  position: absolute;
+  right: 12px;
+  top: 40px;
+  color: var(--text-color);
+  font-size: 0.9em;
+  font-family: 'Poppins', sans-serif;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+/* Estilos del grupo de botones */
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Estilos base de los botones */
+.btn {
+  flex: 1;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Estilos del botón primario */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color), #FF9EB5);
+  color: white;
+  box-shadow: 0 4px 15px rgba(232, 161, 179, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(232, 161, 179, 0.4);
+}
+
+.btn-primary:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Estilos del botón secundario */
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+/* Estilos de los mensajes de error */
+.error-message {
+  color: #ff4d4f;
+  font-size: 0.9em;
+  margin-bottom: 1rem;
+  padding: 10px;
+  background-color: #fff2f0;
+  border: 1px solid #ffccc7;
+  border-radius: 8px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}

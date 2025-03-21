@@ -1,0 +1,43 @@
+<div class="content">
+  <div class="page-header">
+    <h1>
+      <i class="fas fa-user-shield"></i>
+      Gestión de Roles
+    </h1>
+    <button class="btn btn-primary" (click)="addRole()">
+      <i class="fas fa-plus"></i>
+      Agregar Rol
+    </button>
+  </div>
+
+  <div class="grid">
+    <div class="shift-card" *ngFor="let role of roles">
+      <div class="shift-info">
+        <h3>{{ role.name }}</h3>
+      </div>
+      <div class="shift-actions">
+        <button class="btn-icon" (click)="editRole(role.id)">
+          <i class="fas fa-pen-to-square"></i>
+        </button>
+        <button class="btn-icon btn-delete" (click)="deleteRole(role.id)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-data" *ngIf="roles.length === 0">
+    <p>No hay roles registrados</p>
+  </div>
+
+  <app-add-roles
+    *ngIf="showModal && !selectedRoleId"
+    (closeModal)="handleModalClose($event)">
+  </app-add-roles>
+
+  <app-edit-role
+    *ngIf="showModal && selectedRoleId"
+    [roleId]="selectedRoleId"
+    (closeModal)="handleModalClose($event)">
+  </app-edit-role>
+</div>

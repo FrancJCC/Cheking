@@ -1,0 +1,76 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h1>
+      <i class="fas fa-clock"></i>
+      Gestión de Horarios
+    </h1>
+    <button class="btn btn-primary" (click)="addShift()">
+      <i class="fas fa-plus"></i> Nuevo Horario
+    </button>
+  </div>
+
+  <!-- Loading spinner -->
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Cargando horarios...</p>
+  </div>
+
+  <!-- Shifts grid -->
+  <div *ngIf="!loading" class="shifts-grid">
+    <div *ngFor="let shift of shifts" class="shift-card">
+      <div class="shift-header">
+        <h3>{{ shift.name }}</h3>
+        <div class="shift-actions">
+          <button class="btn-icon" (click)="editShift(shift.id)" title="Editar">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="btn-icon delete" (click)="deleteShift(shift.id)" title="Eliminar">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="shift-time">
+        <div class="time-block">
+          <span class="time-label">Entrada</span>
+          <span class="time-value">{{ formatTimeToAMPM(shift.start_time) }}</span>
+        </div>
+        <div class="time-separator">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+        <div class="time-block">
+          <span class="time-label">Salida</span>
+          <span class="time-value">{{ formatTimeToAMPM(shift.end_time) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <!-- Empty state button also needs to be updated -->
+    <div *ngIf="shifts.length === 0" class="empty-state">
+      <i class="fas fa-clock fa-3x"></i>
+      <h3>No hay horarios configurados</h3>
+      <p>Comienza agregando un nuevo horario para tus empleados</p>
+      <button class="btn btn-primary" (click)="addShift()">
+        <i class="fas fa-plus"></i> Agregar Horario
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div *ngIf="showSuccessMessage" class="alert success">
+    <i class="fas fa-check-circle"></i>
+    Horario actualizado correctamente
+  </div>
+
+  <div *ngIf="errorMessage" class="alert error">
+    <i class="fas fa-exclamation-circle"></i>
+    {{ errorMessage }}
+  </div>
+</div>
+
+<app-edit-shift 
+  *ngIf="showModal" 
+  [shiftId]="selectedShiftId"
+  (closeModal)="handleModalClose($event)">
+</app-edit-shift>
